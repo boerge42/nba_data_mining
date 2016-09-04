@@ -1,0 +1,66 @@
+
+Uwe Berger (bergeruw@gmx.net); 2016
+===================================
+
+Anforderung war das Zusammensuchen diverser Daten von 
+http://www.basketball-reference.com und deren Aufbereitung. Zur besseren
+Auswertbarkeit werden die gewonnen Daten in einer SQLite3-Datenbank 
+abgelegt.
+
+Da die Geschichte etwas "historisch gewachsen" ist, unterteilt sich
+alles in mehrere Schritte. Die Tcl-Skripte sind mit Sicherheit nicht
+besonders huebsch und optimal, tun aber ihren Dienst...
+
+
+Schritt 1: data_crawler.tcl
+---------------------------
+Ausgangspunkt ist die Uebersicht der Spieler pro NBA-Saison, jahrgangs-
+weise unter 
+http://www.basketball-reference.com/leagues/NBA_$year\_advanced.html
+Dabei steht $year fuer das Jahr.
+Das Skript holt die entsprechenden Saison-Seiten aus dem Internet, 
+liest die Daten aller Spieler im Kontext und laed auch deren Einzel-
+seiten auf den Rechner.
+
+
+Schritt 2: season2sqlite.tcl
+----------------------------
+Auslesen der Saison-Dateien und Ablage der enthaltenen Spielerdaten in 
+einer SQLite3-Tabelle.
+
+
+Schritt 3: salary2sqlite.tcl
+----------------------------
+Analyse aller heruntergeladenen Spielerdateien nach den dort enthaltenen
+Gehaltsdaten und Ablage in einer SQLite3-Tabelle.
+
+
+Schritt 4: drafts_id4name.tcl
+-----------------------------
+Dieser Schritt wurde nicht automatisiert, da die Datenmengen zu den Drafts
+ueberschaubar waren. Ueber oben genannte Webseite wurden die Draft-Daten
+jahrgangsweise im CSV-Format manuell heruntergeladen und via CSV-
+Importfunktion in eine SQLite3-Tabelle importiert.
+Das Skript dient lediglich dazu, zu den Spielernamen die SpielerID aus 
+der Saison-Tabelle zu ermitteln, da diese in den Draft-Daten fehlt.
+
+
+Auswertebeispiel: generate_tobis_csv.tcl
+----------------------------------------
+...nur ein moegliches Beispiel, was man mit den gewonnen Daten machen 
+kann. Hier werden zu allen Saison-Spieler-Datensaetzen die jeweiligen 
+Draft-Daten und das entsprechende Saison-Gehalt hinzugefuegt und in 
+eine CSV-Datei geschrieben.
+
+
+Allgemein:
+----------
+Um diese Skripte sinnvoll benutzen zu können, sollte man schon etwas 
+Tcl können, um zum einen vorgebene Verzeichnisstrukturen, Tabellennamen
+u.ae. herauslesen zu koennen oder zum anderen auch Anpassungen an seine 
+Wuensche vornehmen zu koennen. 
+Ich werde dafuer keinen Support erbringen! 
+
+
+----------------------
+Happy Tcl an have fun!
